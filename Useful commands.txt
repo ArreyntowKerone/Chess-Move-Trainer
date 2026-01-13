@@ -1,0 +1,6 @@
+# Dependencies download
+npm install package-name (the --save or -P flags are also available but are now 
+the default behavior).
+
+# Devdependencies download
+npm install package-name --save-dev or the shortcut npm install package-name -D
