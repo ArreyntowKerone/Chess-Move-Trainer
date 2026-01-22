@@ -38,26 +38,41 @@ export default function Welcome({ onComplete }: WelcomeProps) {
   };
 
   return (
-    // The main container needs to cover the full screen height
-    <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ 
+      height: '100vh', 
+      width: '100vw',
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center',
+      overflow: 'hidden'
+    }}>
       <AnimatePresence mode="wait">
         {!showMenu ? (
-          // This motion.div now centers its children using flexbox
           <motion.div
             key="intro-element"
             initial={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -70 }}
             transition={{ duration: 0.5 }}
             style={{
-              display: 'flex',          // Use flexbox
-              justifyContent: 'center', // Center horizontally
-              alignItems: 'center',     // Center vertically
-              height: '100vh',          // Ensure it takes full height to center within view
-              width: '100vw',           // Ensure it takes full width
-              position: 'fixed'         // Keep it in place during transition
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+              width: '100%',
+              position: 'fixed',
+              textAlign: 'center',
+              padding: '20px',
+              boxSizing: 'border-box'
             }}
           >
-            <h1>Welcome to Chess Trainer!</h1>
+            <h1 style={{ 
+              color: 'white',
+              fontSize: 'clamp(24px, 5vw, 48px)',
+              margin: 0,
+              padding: '0 20px'
+            }}>
+              Welcome to Chess Trainer!
+            </h1>
           </motion.div>
         ) : (
           <motion.nav
@@ -78,7 +93,9 @@ export default function Welcome({ onComplete }: WelcomeProps) {
               justifyContent: 'center',
               alignItems: 'center',
               color: 'white',
-              zIndex: 1000
+              zIndex: 1000,
+              padding: '20px',
+              boxSizing: 'border-box'
             }}
           >
             {shouldShow && <ChessMaster onNext={() => setShowPopup(true)} onLoad={setSelectedMaster} />}
@@ -104,7 +121,9 @@ export default function Welcome({ onComplete }: WelcomeProps) {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              zIndex: 2000
+              zIndex: 2000,
+              padding: '20px',
+              boxSizing: 'border-box'
             }}
           >
             <motion.div
@@ -114,41 +133,69 @@ export default function Welcome({ onComplete }: WelcomeProps) {
               transition={{ duration: 0.3 }}
               style={{
                 backgroundColor: 'white',
-                padding: '50px',
+                padding: 'clamp(20px, 5vw, 50px)',
                 borderRadius: '10px',
                 textAlign: 'center',
-                minWidth: '300px'
+                minWidth: '300px',
+                maxWidth: '90vw',
+                width: 'auto',
+                boxSizing: 'border-box'
               }}
             >
-              <h2>What's your chess name?</h2>
+              <h2 style={{ color: '#2c2b29', marginBottom: '20px' }}>
+                What's your chess name?
+              </h2>
               <input
                 type="text"
                 value={tempName}
                 onChange={(e) => setTempName(e.target.value)}
-                style={{ padding: '10px', width: '80%', marginBottom: '20px' }}
+                style={{ 
+                  padding: '12px', 
+                  width: '100%', 
+                  marginBottom: '20px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  fontSize: '16px',
+                  boxSizing: 'border-box',
+                  color: '#2c2b29'
+                }}
                 placeholder="Enter your name"
               />
-              <br />
-              <h2>What's your ELO rating?</h2>
+              
+              <h2 style={{ color: '#2c2b29', marginBottom: '20px' }}>
+                What's your ELO rating?
+              </h2>
               <input
                 type="number"
                 value={tempElo}
                 onChange={(e) => setTempElo(Number(e.target.value))}
                 min="100"
                 max="3000"
-                style={{ padding: '10px', width: '80%', marginBottom: '20px' }}
+                style={{ 
+                  padding: '12px', 
+                  width: '100%', 
+                  marginBottom: '30px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  fontSize: '16px',
+                  boxSizing: 'border-box',
+                  color: '#2c2b29'
+                }}
               />
-              <br />
+              
               <button
                 onClick={handleSubmit}
                 style={{
-                  padding: '10px 30px',
+                  padding: '12px 30px',
                   backgroundColor: '#2c2b29',
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
                   cursor: 'pointer',
-                  fontSize: '16px'
+                  fontSize: '16px',
+                  width: '100%',
+                  maxWidth: '250px',
+                  opacity: !tempName.trim() ? 0.6 : 1
                 }}
                 disabled={!tempName.trim()}
               >
