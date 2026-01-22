@@ -66,8 +66,7 @@ export default function Welcome({ onComplete }: WelcomeProps) {
             }}
           >
             <h1 style={{ 
-              color: 'white',
-              fontSize: 'clamp(24px, 5vw, 48px)',
+              fontSize: 'clamp(30px, 6vw, 50px)',
               margin: 0,
               padding: '0 20px'
             }}>
