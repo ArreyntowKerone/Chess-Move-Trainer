@@ -1,79 +1,84 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-export default function ChessMaster({ onNext }) {
+interface ChessMasterProps {
+    onNext: () => void;
+    onLoad?: (master: any) => void;
+}
+
+export default function ChessMaster({ onNext, onLoad }: ChessMasterProps) {
     const [showName, setShowName] = useState(false);
 
     const grandmasters = [
-        { 
-            src: '/masters/alireza.webp', 
-            name: 'Alireza Firouzja', 
+        {
+            src: '/masters/alireza.webp',
+            name: 'Alireza Firouzja',
             quote: 'I want to be World Champion. That is my dream since I was a child.',
             title: 'Chess Prodigy'
         },
-        { 
-            src: '/masters/Anish.jpg', 
-            name: 'Anish Giri', 
+        {
+            src: '/masters/Anish.jpg',
+            name: 'Anish Giri',
             quote: 'In chess, as in life, a man is his own most dangerous opponent.',
             title: 'Strategic Thinker'
         },
-        { 
-            src: '/masters/capablanca.webp', 
-            name: 'José Raúl Capablanca', 
+        {
+            src: '/masters/capablanca.webp',
+            name: 'José Raúl Capablanca',
             quote: 'You may learn much more from a game you lose than from a game you win.',
             title: 'The Chess Machine'
         },
-        { 
-            src: '/masters/Ding.webp', 
-            name: 'Ding Liren', 
+        {
+            src: '/masters/Ding.webp',
+            name: 'Ding Liren',
             quote: 'Sometimes the hardest move to find is the quiet one.',
             title: 'World Champion'
         },
-        { 
-            src: '/masters/Fabi.webp', 
-            name: 'Fabiano Caruana', 
+        {
+            src: '/masters/Fabi.webp',
+            name: 'Fabiano Caruana',
             quote: 'The difference between a good player and a great player is how they handle pressure.',
             title: 'American #1'
         },
-        { 
-            src: '/masters/Fischer.jpg', 
-            name: 'Bobby Fischer', 
+        {
+            src: '/masters/Fischer.jpg',
+            name: 'Bobby Fischer',
             quote: 'All I want to do, ever, is play chess.',
             title: 'The Greatest'
         },
-        { 
-            src: '/masters/Hans.png', 
-            name: 'Hans Niemann', 
+        {
+            src: '/masters/Hans.png',
+            name: 'Hans Niemann',
             quote: 'I have sacrificed everything for chess.',
             title: 'Young Talent'
         },
-        { 
-            src: '/masters/Hikaru.jpeg', 
-            name: 'Hikaru Nakamura', 
+        {
+            src: '/masters/Hikaru.jpeg',
+            name: 'Hikaru Nakamura',
             quote: 'If you play for a win, you get more opportunities.',
             title: 'Speed Chess King'
         },
-        { 
-            src: '/masters/Kasparov.webp', 
-            name: 'Garry Kasparov', 
+        {
+            src: '/masters/Kasparov.webp',
+            name: 'Garry Kasparov',
             quote: 'The ability to play chess is the sign of a gentleman. The ability to play chess well is the sign of a wasted life.',
             title: 'The Beast from Baku'
         },
-        { 
-            src: '/masters/Magnus.webp', 
-            name: 'Magnus Carlsen', 
+        {
+            src: '/masters/Magnus.webp',
+            name: 'Magnus Carlsen',
             quote: 'I try to play the best move. Sometimes I succeed.',
             title: 'GOAT'
         },
-        { 
-            src: '/masters/Gukesh.webp', 
-            name: 'Gukesh Dommaraju', 
+        {
+            src: '/masters/Gukesh.webp',
+            name: 'Gukesh Dommaraju',
             quote: 'Every game is a new opportunity to prove yourself, regardless of your age or opponent.',
             title: 'History Maker'
         },
-        { 
-            src: '/masters/Vishy.jpg', 
-            name: 'Viswanathan Anand', 
+        {
+            src: '/masters/Vishy.jpg',
+            name: 'Viswanathan Anand',
             quote: 'You don\'t win with the best moves. You win with the moves your opponent doesn\'t see.',
             title: 'The Tiger of Madras'
         },
@@ -81,9 +86,15 @@ export default function ChessMaster({ onNext }) {
 
     const currentMaster = useMemo(() => grandmasters[Math.floor(Math.random() * grandmasters.length)], []);
 
+    useEffect(() => {
+        if (onLoad) {
+            onLoad(currentMaster);
+        }
+    }, [currentMaster, onLoad]);
+
     return (
-        <div style={{ 
-            textAlign: 'center', 
+        <div style={{
+            textAlign: 'center',
             color: 'white',
             padding: '40px 20px',
             maxWidth: '500px',
@@ -125,8 +136,8 @@ export default function ChessMaster({ onNext }) {
             </motion.div>
 
             {/* Master Image with Hover Effect */}
-            <div 
-                style={{ 
+            <div
+                style={{
                     position: 'relative',
                     display: 'inline-block',
                     marginBottom: '30px'
@@ -134,25 +145,25 @@ export default function ChessMaster({ onNext }) {
                 onMouseEnter={() => setShowName(true)}
                 onMouseLeave={() => setShowName(false)}
             >
-                <motion.img 
-                    src={currentMaster.src} 
+                <motion.img
+                    src={currentMaster.src}
                     alt={currentMaster.name}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 }}
-                    style={{ 
-                        width: '320px', 
-                        height: '220px', 
-                        borderRadius: '12px', 
+                    style={{
+                        width: '320px',
+                        height: '220px',
+                        borderRadius: '12px',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
                         objectFit: 'cover',
                         border: '3px solid rgba(255, 255, 255, 0.1)'
                     }}
                 />
-                
+
                 {/* Hover Overlay - Better Arrangement */}
                 {showName && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
@@ -169,15 +180,15 @@ export default function ChessMaster({ onNext }) {
                             borderBottomRightRadius: '12px'
                         }}
                     >
-                        <div style={{ 
-                            fontSize: '1.4rem', 
+                        <div style={{
+                            fontSize: '1.4rem',
                             fontWeight: '700',
                             marginBottom: '6px',
                             textShadow: '0 2px 4px rgba(0,0,0,0.5)'
                         }}>
                             {currentMaster.name}
                         </div>
-                        <div style={{ 
+                        <div style={{
                             fontSize: '0.95rem',
                             color: '#81b64c',
                             fontWeight: '600',
@@ -192,7 +203,7 @@ export default function ChessMaster({ onNext }) {
 
             {/* Next Button Container */}
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                <motion.button 
+                <motion.button
                     onClick={onNext}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -210,7 +221,7 @@ export default function ChessMaster({ onNext }) {
                         transition: 'all 0.2s ease',
                         minWidth: '180px' // Optional: set minimum width
                     }}
-                    whileHover={{ 
+                    whileHover={{
                         scale: 1.05,
                         boxShadow: '0 6px 20px rgba(129, 182, 76, 0.6)'
                     }}
@@ -221,7 +232,7 @@ export default function ChessMaster({ onNext }) {
             </div>
 
             {/* Optional: Small hint text */}
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.7 }}
                 transition={{ delay: 0.8 }}
